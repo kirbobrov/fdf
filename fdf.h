@@ -27,8 +27,9 @@ typedef struct s_point
 	double	x;
 	double	y;
 	double	z;
-//	double	x0;
-//	double	y0;
+	double	x0;
+	double	y0;
+	double 	z0;
 	int		color;
 }				t_point;
 
@@ -37,12 +38,12 @@ typedef struct s_fdf
 	void			*mlx;
 	void			*win;
 	//void			*img;
-	t_point			**pt;
+	//t_point			**pt;
 	//int				mapx;
 	//int				mapy;
 	int				turn[3];
 	char 			*str;
-	//char 			*line;
+	char 			**line;
 	int				xmax;
 	int				ymax;
 	//double 			delimeter=700;
@@ -74,7 +75,7 @@ typedef struct      s_fdf
 */
 
 int		fdf(int ac, char **av);
-int		ft_readmap(const int fd, char *src, t_fdf *s);
+int		ft_readmap(const int fd, t_fdf *s);
 int		ft_valid(t_fdf *s);
 void	ft_image(t_fdf *s, t_point **pt);
 void	ft_isometric(t_fdf *s, t_point **pt);

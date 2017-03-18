@@ -59,7 +59,8 @@ void ft_draw(int x0, int y0, int x1, int y1, int color, t_fdf *s) ///, t_point *
 	}
 }
 
-int 	ft_bits(t_fdf *s, t_point **pt)
+/*
+int 	ft_bits(t_fdf *s, t_point **pt) ////// где то на битах происходит сигфолт
 {
 	int x;
 	int y;
@@ -85,14 +86,15 @@ int 	ft_bits(t_fdf *s, t_point **pt)
 		y++;
 	}
 	return(0);
-}
+}*/
 
 void	ft_image(t_fdf *s, t_point **pt)
 {
 	int 	x;
 	int 	y;
+	double	mul;
 
-	s->ymax > s->xmax ? (s->mult = (1400 / s->ymax)) : (s->mult = (1400 / s->xmax));
+	s->ymax > s->xmax ? (mul = (s->mult / s->ymax)) : (mul = (s->mult / s->xmax));
 	y = 0;
 	while (y < s->ymax)
 	{
@@ -101,16 +103,16 @@ void	ft_image(t_fdf *s, t_point **pt)
 		{
 			//(pt[y][x].z == 0) ? (color = 0xFF0000) : (color = pt[y][x].color);
 			if (x != s->xmax - 1)
-				ft_draw(((pt[y][x].x - (s->xmax / 2)) * s->mult + 700),
-						((pt[y][x].y - (s->ymax / 2)) * s->mult + 1100),
-						((pt[y][x + 1].x - (s->xmax / 2)) * s->mult + 700),
-						((pt[y][x + 1].y - (s->ymax / 2)) * s->mult + 1100), pt[y][x].color, s);
+				ft_draw(((pt[y][x].x - (s->xmax / 2)) * mul + 700),
+						((pt[y][x].y - (s->ymax / 2)) * mul + 1100),
+						((pt[y][x + 1].x - (s->xmax / 2)) * mul + 700),
+						((pt[y][x + 1].y - (s->ymax / 2)) * mul + 1100), pt[y][x].color, s);
 
 			if (y != s->ymax - 1)
-				ft_draw(((pt[y][x].x - (s->xmax / 2)) * s->mult + 700),
-						((pt[y][x].y - (s->ymax / 2)) * s->mult + 1100),
-						((pt[y + 1][x].x - (s->xmax / 2)) * s->mult + 700),
-						((pt[y + 1][x].y - (s->ymax / 2)) * s->mult + 1100), pt[y][x].color, s);
+				ft_draw(((pt[y][x].x - (s->xmax / 2)) * mul + 700),
+						((pt[y][x].y - (s->ymax / 2)) * mul + 1100),
+						((pt[y + 1][x].x - (s->xmax / 2)) * mul + 700),
+						((pt[y + 1][x].y - (s->ymax / 2)) * mul + 1100), pt[y][x].color, s);
 			x++;
 		}
 		y++;

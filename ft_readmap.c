@@ -12,125 +12,71 @@
 
 #include "fdf.h"
 
-void 	ft_readpoint(t_fdf *s)
+void	ft_swapcolor(char *str)
 {
 	int 	i;
-	//int		j;
-	int 	l;
-
-	//char 	*buf;
-	l = 0;
-	i = 0;
-	while (s->str[i++])
-		s->str[i] == '\n' ? l++ : 0;
-	//j = 0;
-	s->ymax = l;
-	printf("y max == %d\n", s->ymax);
-}
-
-void	ft_read(const int fd, char *src, t_fdf *s)
-{
-	int		i;
-	size_t		re;
-	char	*buf;
-	char	*str;
 
 	i = 0;
-	buf = (char *)malloc(10000001);
-	re = read(fd, buf, 10000000);
-	str = (char *)malloc(re + 1);
-	while (i <= re)
+	while(str)
 	{
-		str[i] = buf[i];
-		i++;
- 	}
-	str[i] = '\0';
-	s->str = str;
-	free (buf);
-	//return (str);
-}
-
-int 	ft_lenline(char **str)
-{
-	int i;
-	int	j;
-	int n;
-
-	i = 0;
-	n = 0;
-	while (str[i])
-	{
-		j = 0;
-		while (str[i][j])
-		{
-			j++;
-			n++;
-		}
+		if (str[i] > 96 || str[i] < 103)
+			str[i] -= 32;
 		i++;
 	}
-	return (n);
-}
+} //////функция не дописана. нужно допиать что бы она свапала все в большой регистр
 
-char 	*ft_color(char *str)
+char 	*ft_color_substr(char *str)
 {
-	int i;
+	int 	i;
 
 	i = 0;
 	if (str)
-		while (str[i]) {
+		while (str[i])
+		{
 			if (str[i] == 'x' || str[i] == 'X')
 				return (str + i + 1);
-			i++;
+			else
+				i++;
 		}
-	printf("i = %d\n", i);
-	return (NULL);
+	return ("FFFFFF");
 }
 
-int		ft_readmap(const int fd, char *src, t_fdf *s)
+int		ft_readmap(const int fd, t_fdf *s)
 {
 	int		x;
 	int		y;
 	char 	**buf;
-	char 	**line;
-	char 	**col;
+	char 	*line;
 	t_point **po;
 
 	y = 0;
-	//buf = ft_strnew(0);
-	//buf = ft_strjoin(buf, (ft_read(fd, src))); /// read all map join src to buf
-	ft_read(fd, src, s);
-	ft_readpoint(s);
+	//ft_read(fd, s);
 	//ft_valid(s);
-	po = (t_point**)malloc(sizeof(t_point*) * s->ymax);
-	buf = ft_strsplit(s->str, '\n');
-	while (buf[y])
+	po = (t_point**)malloc(sizeof(t_point*) * (s->ymax + 1));
+	po[s->ymax] = NULL;
+	while (get_next_line(fd, &line) > 0)
 	{
-	//	printf("ft_readmap buf[y] = %s\n", buf[y]);
+		printf("line[%d] == %s\n",y , line);
 		x = 0;
-		line = ft_strsplit(buf[y], ' ');
-		//printf("ft_readmap line[x]  ==== %s\n", line[x]);
-		po[y] = (t_point*)malloc(sizeof(t_point) * (s->xmax = ft_lenline(line)));
-		//printf("s->xmax = %d\n", s->xmax); //// нужно дописать остановился на том что необходимо порезать стринг по сьтрокам и запихнуть в массив структур
-		while(line[x])
+		po[y] = (t_point*)malloc(sizeof(t_point) * (s->xmax));
+
+		buf = ft_strsplit(line, ' ');
+		while(buf[x])
 		{
-			col = ft_strsplit(line[x], ',');
 			po[y][x].x = x;
 			po[y][x].y = y;
-			printf("col == %s   %s\n", col[0], col[1]);
-			col[0] ? (po[y][x].z = ft_atoi(col[0])) : 0;
-			col[1] ? (po[y][x].color = ft_atoi_base(ft_color(col[1]), 16)) : (po[y][x].color = 0xFFFFFF);
-			//printf("ft_readmap po[%d][%d].x = %d po[%d][%d].y = %d\n", y, x, po[y][x].x, y, x, po[y][x].y);
-			//printf("ft_readmap po[%d][%d].y read point === %d\n", y, x, po[y][x].y);
-			//printf("ft_readmap line[%d] read point === %d\n", x, po[y][x].z);
-			printf("color %d\n", po[y][x].color);
+			po[y][x].z = (double)ft_atoi(buf[x]);
+			//ft_swapcolor(buf[x]);
+			po[y][x].color = ft_atoi_base(ft_color_substr(buf[x]), 16);
+			printf("buf[x] = %s\t\t\t, x = %i\telem[%d][%d].z = %.1f\t\tcolor[%d]=%d\n", buf[x], x, y, x, po[y][x].z, x, po[y][x].color);
 			x++;
 		}
+		printf("\n");
 		y++;
 	}
-	//ft_isometric(s, po);
-	ft_bits(s, po);
-	//ft_image(s, po);
-	//printf("ft_readmymap\n%s\n", s->str);
+	ft_isometric(s, po);
+	//ft_bits(s, po);
+	ft_image(s, po);
 
 	//printf("main 3\n");
 	return 0;
