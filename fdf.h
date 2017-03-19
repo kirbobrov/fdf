@@ -38,7 +38,7 @@ typedef struct s_fdf
 	void			*mlx;
 	void			*win;
 	//void			*img;
-	//t_point			**pt;
+	t_point			**pt;
 	//int				mapx;
 	//int				mapy;
 	int				turn[3];
@@ -46,10 +46,16 @@ typedef struct s_fdf
 	char 			**line;
 	int				xmax;
 	int				ymax;
+	int 			dx;
+	int 			dy;
 	//double 			delimeter=700;
 	double			mult;
-	//int 			cx;
-	//int 			cy;
+	double			xa;
+	double 			xa0;
+	double 			ya;
+	double 			ya0;
+	double 			za;
+	double 			za0;
 
 
 //	double			mapz;
@@ -76,9 +82,11 @@ typedef struct      s_fdf
 
 int		fdf(int ac, char **av);
 int		ft_readmap(const int fd, t_fdf *s);
-int		ft_valid(t_fdf *s);
-void	ft_image(t_fdf *s, t_point **pt);
+///int		ft_valid(t_fdf *s);
+void	ft_image(t_fdf *s);
 void	ft_isometric(t_fdf *s, t_point **pt);
-int 	ft_bits(t_fdf *s, t_point **pt);
-//void	ft_draw(int x0, int y0, int x1, int y1, int color, t_fdf *s);
+///int 	ft_bits(t_fdf *s, t_point **pt);
+int		my_key(int	keycode, t_fdf *s);
+///void	mlx_destroy(t_fdf *s, t_point **pt);
+
 #endif

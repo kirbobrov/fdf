@@ -12,11 +12,38 @@
 
 #include "fdf.h"
 
+void	mlx_destroy(t_fdf *s)
+{
+	mlx_clear_window(s->mlx, s->win);
+	ft_image(s);
+}
 
 int		my_key(int	keycode, t_fdf *s)
 {
 	if (keycode == 53)
 		exit (53);
+	if (keycode == 126)
+	{
+		///s->xa = (s->xa0 + 1);
+		//printf("conner == %.2f  conner 0 == %.2f \n", s->xa, s->xa0);
+		mlx_destroy(s);
+	}
+	if(keycode == 125)
+	{
+		///s->xa = (s->xa0 - 1);
+		//printf("conner == %.2f  conner 0 == %.2f \n", s->xa, s->xa0);
+		mlx_destroy(s);
+	}
+	if (keycode == 123)
+	{
+		///s->dy -= 100;
+		mlx_destroy(s);
+	}
+	if (keycode == 124)
+	{
+		///s->dy += 100;
+		mlx_destroy(s);
+	}
 	printf ("my keycode %d\n", keycode);
 	//mlx_pixel_put (mlx, win, 300, 200, 0xFF00FF);
 	return (0);
@@ -24,7 +51,7 @@ int		my_key(int	keycode, t_fdf *s)
 
 int		ft_mouse_hook(void *win, int x, int y, t_fdf *s)
 {
-	exit (77);  // дописать исполнение события когда нажимается крестик
+	exit (77);  /// дописать исполнение события когда нажимается крестик
 }
 
 int 	ft_xmax(char **str)
@@ -67,7 +94,7 @@ int		main(int ac, char **av)
 	(ac == 2 && fd >= 3) ? ft_readmap(fd, &s) : 0;
 
 	close(fd);
-	mlx_key_hook (s.win, my_key, &s);
+
 	//mlx_mouse_hook(s.win, ft_mouse_hook, &s);
 	//ft_draw(900, 500, 357, 524, 0x00FFFFFF, &s); /// x0, y0, xn, yn, color, struct(win, mlx)
 	mlx_hook(s.win, 17, 0L, ft_mouse_hook, &s);
