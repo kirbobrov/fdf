@@ -20,7 +20,8 @@
 # include "libft/libft.h"
 # include <math.h>
 # define RAD(a) (a = 0.01745329 * a)
-
+# define HEIGHT 1200
+# define WEIGHT 1600
 
 typedef struct s_point
 {
@@ -84,7 +85,7 @@ int		fdf(int ac, char **av);
 int		ft_readmap(const int fd, t_fdf *s);
 ///int		ft_valid(t_fdf *s);
 void	ft_image(t_fdf *s);
-void	ft_isometric(t_fdf *s, t_point **pt);
+void	ft_isometric(t_fdf *s);////, t_point **pt);
 ///int 	ft_bits(t_fdf *s, t_point **pt);
 int		my_key(int	keycode, t_fdf *s);
 ///void	mlx_destroy(t_fdf *s, t_point **pt);

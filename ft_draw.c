@@ -88,12 +88,18 @@ int 	ft_bits(t_fdf *s, t_point **pt) ////// где то на битах прои
 	return(0);
 }*/
 
-void	ft_image(t_fdf *s, t_point **pt)
+void	ft_image(t_fdf *s)
 {
 	int 	x;
 	int 	y;
 	double	mul;
 
+	///printf("conner xa == %.2f  conner xa0 == %.2f \n", s->xa, s->xa0);
+	///printf("conner ya == %.2f  conner ya0 == %.2f \n", s->ya, s->ya0);
+	///printf("conner za == %.2f  conner za0 == %.2f \n", s->za, s->za0);
+	///printf("dy == %i  \t\n", s->dx);
+	///printf(" dx == %i \t\n", s->dy);
+	///ft_isometric(s, s->pt);
 	s->ymax > s->xmax ? (mul = (s->mult / s->ymax)) : (mul = (s->mult / s->xmax));
 	y = 0;
 	while (y < s->ymax)
@@ -101,18 +107,20 @@ void	ft_image(t_fdf *s, t_point **pt)
 		x = 0;
 		while (x < s->xmax)
 		{
-			//(pt[y][x].z == 0) ? (color = 0xFF0000) : (color = pt[y][x].color);
+			if (s->pt[y][x].z0 > 0 && s->pt[y][x].color == ft_atoi_base("FFFFFF", 16))
+				s->pt[y][x].color = ft_atoi_base("FF000F", 16);
+			///(pt[y][x].z == 0) ? (color = 0xFF0000) : (color = pt[y][x].color);
 			if (x != s->xmax - 1)
-				ft_draw(((pt[y][x].x - (s->xmax / 2)) * mul + 700),
-						((pt[y][x].y - (s->ymax / 2)) * mul + 1100),
-						((pt[y][x + 1].x - (s->xmax / 2)) * mul + 700),
-						((pt[y][x + 1].y - (s->ymax / 2)) * mul + 1100), pt[y][x].color, s);
+				ft_draw(((s->pt[y][x].x) * mul + s->dx),
+						((s->pt[y][x].y) * mul + s->dy),
+						((s->pt[y][x + 1].x) * mul + s->dx),
+						((s->pt[y][x + 1].y) * mul + s->dy), s->pt[y][x].color, s);
 
 			if (y != s->ymax - 1)
-				ft_draw(((pt[y][x].x - (s->xmax / 2)) * mul + 700),
-						((pt[y][x].y - (s->ymax / 2)) * mul + 1100),
-						((pt[y + 1][x].x - (s->xmax / 2)) * mul + 700),
-						((pt[y + 1][x].y - (s->ymax / 2)) * mul + 1100), pt[y][x].color, s);
+				ft_draw(((s->pt[y][x].x) * mul + s->dx),
+						((s->pt[y][x].y) * mul + s->dy),
+						((s->pt[y + 1][x].x) * mul + s->dx),
+						((s->pt[y + 1][x].y) * mul + s->dy), s->pt[y][x].color, s);
 			x++;
 		}
 		y++;

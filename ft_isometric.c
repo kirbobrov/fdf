@@ -51,37 +51,63 @@ void	ft_matrz(t_fdf *s, t_point *pt)
 	double a;
 
 	a = s->za;
-	s->mult = 700;
+	//s->mult = 700;
 	x = pt->x;
 	y = pt->y;
-	pt->x0 = pt->x;
-	pt->y0 = pt->y;
-	pt->z0 = pt->z;
 
 	RAD(a);
 	pt->x = ((x * cos(a)) + (y * (-sin(a))));
 	pt->y = ((x * sin(a)) + (y * (cos(a))));
-	//pt.z = ((x * (-sin(a))) + (z * cos(a)));
+	//pt->z = ((x * (-sin(a))) + (z * cos(a)));
 }
 
-void	ft_isometric(t_fdf *s, t_point **pt)
+void	ft_begin_point(t_fdf *s)
 {
-	int x;
 	int y;
-	//double xa;
-	//double ya;
-	//double za;
+	int x;
 
-	//printf("conner in isometric== %f  conner 0  in isometric== %f \n", s->xa, s->xa0);
 	y = 0;
 	while (y < s->ymax)
 	{
 		x = 0;
 		while (x < s->xmax)
 		{
-			ft_matrz(s, &pt[y][x]);
-			ft_matrx(s, &pt[y][x]);
-			ft_matry(s, &pt[y][x]);
+			s->pt[y][x].x = s->pt[y][x].x0;
+			s->pt[y][x].y = s->pt[y][x].y0;
+			s->pt[y][x].z = s->pt[y][x].z0;
+			x++;
+		}
+		y++;
+	}
+}
+
+void	ft_isometric(t_fdf *s)///, t_point **pt)
+{
+	int 	x;
+	int 	y;
+	//double xa;
+	//double ya;
+	//double za;
+	///double	mul;
+
+	///	mul = 0;
+	y = 0;
+	s->xa = s->xa0;
+	s->ya = s->ya0;
+	s->za = s->za0;
+	ft_begin_point(s);
+	///s->ymax > s->xmax ? (mul = (s->mult / s->ymax)) : (mul = (s->mult / s->xmax));
+	//printf("conner in isometric== %f  conner 0  in isometric== %f \n", s->xa, s->xa0);
+	while (y < s->ymax)
+	{
+		x = 0;
+		while (x < s->xmax)
+		{
+			///pt[y][x].x = pt[y][x].x * mul;
+			///pt[y][x].y = pt[y][x].y * mul;
+			ft_matrz(s, &s->pt[y][x]);
+			ft_matrx(s, &s->pt[y][x]);
+			ft_matry(s, &s->pt[y][x]);
 			x++;
 			//printf("x0 = %.f!\tx = %.f!\ty0 = %.f!\ty = %.f!\tz0 = %.f!\tz = %.f!\t\n", pt[y][x].x0, pt[y][x].x, pt[y][x].y0, pt[y][x].y, pt[y][x].z0, pt[y][x].z);
 		}

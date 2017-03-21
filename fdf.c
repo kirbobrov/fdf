@@ -20,32 +20,79 @@ void	mlx_destroy(t_fdf *s)
 
 int		my_key(int	keycode, t_fdf *s)
 {
-	if (keycode == 53)
-		exit (53);
+	(keycode == 53) ? exit (53) : 0;
 	if (keycode == 126)
 	{
-		///s->xa = (s->xa0 + 1);
-		//printf("conner == %.2f  conner 0 == %.2f \n", s->xa, s->xa0);
+		s->dy -= 100;
 		mlx_destroy(s);
 	}
 	if(keycode == 125)
 	{
-		///s->xa = (s->xa0 - 1);
-		//printf("conner == %.2f  conner 0 == %.2f \n", s->xa, s->xa0);
+		s->dy += 100;
 		mlx_destroy(s);
 	}
 	if (keycode == 123)
 	{
-		///s->dy -= 100;
+		s->dx -= 100;
 		mlx_destroy(s);
 	}
 	if (keycode == 124)
 	{
-		///s->dy += 100;
+		s->dx += 100;
+		mlx_destroy(s);
+	}
+	if (keycode == 78 || keycode == 27)
+	{
+		 s->mult -= 100;
+		mlx_destroy(s);
+	}
+	if (keycode == 69 || keycode == 24)
+	{
+		s->mult += 100;
+		mlx_destroy(s);
+	}
+	if(keycode == 0)
+	{
+		s->za0 += 10;
+		ft_isometric(s);
+		mlx_destroy(s);
+	}
+	if(keycode == 6)
+	{
+		s->za0 -= 10;
+		ft_isometric(s);
+		mlx_destroy(s);
+	}
+	if(keycode == 1)
+	{
+		s->xa0 += 10;
+		ft_isometric(s);
+		mlx_destroy(s);
+	}
+	if(keycode == 7)
+	{
+		s->xa0 -= 10;
+		ft_isometric(s);
+		mlx_destroy(s);
+	}
+	if(keycode == 2)
+	{
+		s->ya0 += 10;
+		ft_isometric(s);
+		mlx_destroy(s);
+	}
+	if(keycode == 8)
+	{
+		s->ya0 -= 10;
+		ft_isometric(s);
+		mlx_destroy(s);
+	}
+	if(keycode == 45)
+	{
+		s->mult = 700;
 		mlx_destroy(s);
 	}
 	printf ("my keycode %d\n", keycode);
-	//mlx_pixel_put (mlx, win, 300, 200, 0xFF00FF);
 	return (0);
 }
 
@@ -72,13 +119,13 @@ int		main(int ac, char **av)
 	size_t 	op;
 
 	s.mlx = mlx_init ();
-	s.win = mlx_new_window (s.mlx, 1600, 1200, "fdf");
+	s.win = mlx_new_window (s.mlx, WEIGHT, HEIGHT, "fdf");
 	fd = open(av[1], O_RDONLY);
 	s.ymax = 0;
 	while (get_next_line(fd, &buf))
 		s.ymax++;
 	s.xmax = ft_xmax(ft_strsplit(buf, ' '));
-	printf("s.ymax == %d  s.xmax == %d\n", s.ymax, s.xmax);
+	////printf("s.ymax == %d  s.xmax == %d\n", s.ymax, s.xmax);
 	close(fd);
 	fd = open(av[1], O_RDONLY);
 	if (fd < 0)
@@ -96,7 +143,6 @@ int		main(int ac, char **av)
 	close(fd);
 
 	//mlx_mouse_hook(s.win, ft_mouse_hook, &s);
-	//ft_draw(900, 500, 357, 524, 0x00FFFFFF, &s); /// x0, y0, xn, yn, color, struct(win, mlx)
 	mlx_hook(s.win, 17, 0L, ft_mouse_hook, &s);
 	mlx_loop (s.mlx);
 }
