@@ -23,6 +23,13 @@
 # define HEIGHT 1200
 # define WEIGHT 1600
 
+typedef struct s_color
+{
+	int 	red;
+	int 	green;
+	int 	blue;
+}				t_color;
+
 typedef struct s_point
 {
 	double	x;
@@ -31,7 +38,11 @@ typedef struct s_point
 	double	x0;
 	double	y0;
 	double 	z0;
-	int		color;
+	///int		color;
+	///int 	red;
+	///int 	green;
+	///int 	blue;
+	t_color	*col;
 }				t_point;
 
 typedef struct s_fdf
@@ -40,9 +51,11 @@ typedef struct s_fdf
 	void			*win;
 	//void			*img;
 	t_point			**pt;
-	//int				mapx;
-	//int				mapy;
-	int				turn[3];
+	int 			bpp;
+	int 			endl;
+	int 			sizel;
+	char 			*buf;
+	///int				turn[3];
 	char 			*str;
 	char 			**line;
 	int				xmax;
@@ -57,6 +70,7 @@ typedef struct s_fdf
 	double 			ya0;
 	double 			za;
 	double 			za0;
+	void			*img;
 
 
 //	double			mapz;
@@ -88,6 +102,7 @@ void	ft_image(t_fdf *s);
 void	ft_isometric(t_fdf *s);////, t_point **pt);
 ///int 	ft_bits(t_fdf *s, t_point **pt);
 int		my_key(int	keycode, t_fdf *s);
+
 ///void	mlx_destroy(t_fdf *s, t_point **pt);
 
 #endif

@@ -81,35 +81,26 @@ void	ft_begin_point(t_fdf *s)
 	}
 }
 
-void	ft_isometric(t_fdf *s)///, t_point **pt)
+void	ft_isometric(t_fdf *s)
 {
 	int 	x;
 	int 	y;
-	//double xa;
-	//double ya;
-	//double za;
-	///double	mul;
 
-	///	mul = 0;
 	y = 0;
 	s->xa = s->xa0;
 	s->ya = s->ya0;
 	s->za = s->za0;
 	ft_begin_point(s);
 	///s->ymax > s->xmax ? (mul = (s->mult / s->ymax)) : (mul = (s->mult / s->xmax));
-	//printf("conner in isometric== %f  conner 0  in isometric== %f \n", s->xa, s->xa0);
 	while (y < s->ymax)
 	{
 		x = 0;
 		while (x < s->xmax)
 		{
-			///pt[y][x].x = pt[y][x].x * mul;
-			///pt[y][x].y = pt[y][x].y * mul;
 			ft_matrz(s, &s->pt[y][x]);
 			ft_matrx(s, &s->pt[y][x]);
 			ft_matry(s, &s->pt[y][x]);
 			x++;
-			//printf("x0 = %.f!\tx = %.f!\ty0 = %.f!\ty = %.f!\tz0 = %.f!\tz = %.f!\t\n", pt[y][x].x0, pt[y][x].x, pt[y][x].y0, pt[y][x].y, pt[y][x].z0, pt[y][x].z);
 		}
 		y++;
 	}
