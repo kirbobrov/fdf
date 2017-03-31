@@ -10,6 +10,74 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+int ft_draw_sx() ///// подумать какие аргументы должна принимать функция
+{
+	int d;
+	int d1;
+	int d2;
+	int x;
+	int y;
+	int i;
+
+	d = (dy << 1) - dx;
+	d1 = dy << 1;
+	d2 = (dy - dx) << 1;
+mlx_pixel_put (s->mlx, s->win, x0, y0, color);
+	x = x0 + sx;
+	y = y0;
+	i = 1
+	while (i <= dx)
+	{
+		if (d > 0)
+		{
+			d += d2;
+			y += sy;
+			mlx_pixel_put (s->mlx, s->win, x, y, color);
+		}
+		else
+			d += d1;
+		i++;
+		x += sx;
+
+	}
+	return (0);
+}
+
+int ft_draw_sy() ///// подумать какие аргументы должна принимать функция
+{	
+	int d;
+	int d1;
+	int d2;
+	int x;
+	int y;
+	int i;
+
+	d = (dx << 1) - dy;
+	d1 = dx << 1;
+	d2 = (dx - dy) << 1;
+mlx_pixel_put (s->mlx, s->win, x0, y0, color);
+	x = x0;
+	y = y0 + sy;
+	i = 1
+	while (i <= dy)
+	{
+		if (d > 0)
+		{
+			d += d2;
+			x += sx;
+			mlx_pixel_put (s->mlx, s->win, x, y, color);
+		}
+		else
+			d += d1;
+		i++;
+		x += sx;
+		
+	}
+	return (0);
+}
+
+int ft_draw(int x0, int y0, int x1, int y1, int color, t_fdf *s); /// уже дописанная есть в силаене
+
 //#include "fdf.h"
 
 /*t_img ft_image(t_fdf *s)
